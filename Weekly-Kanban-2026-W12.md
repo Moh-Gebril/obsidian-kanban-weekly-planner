@@ -1,0 +1,71 @@
+---
+
+kanban-plugin: board
+week: 2026-W12
+date_start: 2026-03-21
+date_end: 2026-03-27
+type: weekly-kanban
+
+---
+
+## 📋 To Do
+
+- [ ] #security/webapp 🔴 Complete OWASP Top 10 assessment for client portal
+- [ ] #dev/backend 🔴 Fix database connection pooling issue
+- [ ] #learning/certs 🔴 Complete OSCP lab exercises — Active Directory set
+- [ ] #devops/infra 🟡 Provision new staging environment with Terraform
+- [ ] #research/threat-intel 🟡 Compile weekly threat briefing for stakeholders
+- [ ] #admin 🟡 Prepare sprint retrospective notes
+
+
+## ▸ Sat · 21 Mar
+
+
+
+## ▸ Sun · 22 Mar
+
+
+
+## ▸ Mon · 23 Mar
+
+- [ ] #dev/backend 🔴 Fix database connection pooling issue
+- [ ] #devops/infra 🟡 Provision new staging environment with Terraform
+
+
+## ▸ Tue · 24 Mar
+
+- [ ] #security/webapp 🔴 Complete OWASP Top 10 assessment for client portal
+
+
+## ▸ Wed · 25 Mar
+
+- [ ] #learning/certs 🔴 Complete OSCP lab exercises — Active Directory set
+- [ ] #research/threat-intel 🟡 Compile weekly threat briefing for stakeholders
+
+
+## ▸ Thu · 26 Mar
+
+- [ ] #admin 🟡 Prepare sprint retrospective notes
+
+
+## ▸ Fri · 27 Mar
+
+
+
+## 🧐 Blocked
+
+- [ ] #security 🔴 Patch CVE-2026-XXXX in dependencies — waiting on vendor advisory
+
+
+## ✅ Done
+
+- [x] #dev/frontend 🟡 Fix responsive layout on mobile dashboard
+- [x] #security/network 🟡 Review IDS/IPS rules after infrastructure change
+
+
+
+%% kanban:settings
+```
+{"kanban-plugin":"board","list-collapse":[false,false,false,false,false,false,false,false,false,false,true],"date-display-format":"DD MMM","date-picker-week-start":6,"show-checkboxes":true,"lane-width":290,"tag-colors":[{"tagKey":"#dev","color":"rgba(99, 102, 241, 1)","backgroundColor":"rgba(99, 102, 241, 0.1)"},{"tagKey":"#security","color":"rgba(220, 38, 38, 1)","backgroundColor":"rgba(220, 38, 38, 0.1)"},{"tagKey":"#research","color":"rgba(139, 92, 246, 1)","backgroundColor":"rgba(139, 92, 246, 0.1)"},{"tagKey":"#learning","color":"rgba(14, 165, 133, 1)","backgroundColor":"rgba(14, 165, 133, 0.1)"},{"tagKey":"#devops","color":"rgba(234, 88, 12, 1)","backgroundColor":"rgba(234, 88, 12, 0.1)"},{"tagKey":"#admin","color":"rgba(156, 163, 175, 1)","backgroundColor":"rgba(156, 163, 175, 0.1)"}]}
+```
+%%
