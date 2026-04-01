@@ -13,7 +13,7 @@
             "state": {
               "type": "kanban",
               "state": {
-                "file": "Backlog.md",
+                "file": "2026-W12.md",
                 "kanbanViewState": {
                   "kanban-plugin": "board",
                   "list-collapse": [
@@ -27,17 +27,12 @@
                     false,
                     false,
                     false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false
+                    true
                   ]
                 }
               },
               "icon": "lucide-trello",
-              "title": "Backlog"
+              "title": "2026-W12"
             }
           }
         ]
@@ -216,10 +211,13 @@
   },
   "active": "21ed7d5e34155ed2",
   "lastOpenFiles": [
+    "2026-W13-ar.md",
+    "2026-W12.md",
     "README.md",
-    "Weekly-Kanban-2026-W13.md",
-    "Weekly-Kanban-2026-W12.md",
     "Backlog.md",
+    "Weekly-Kanban-2026-W13.md",
+    "Untitled.md",
+    "Weekly-Kanban-2026-W12.md",
     "_templates/Weekly-Kanban-Template.md",
     "LICENSE",
     "assets/screenshots/weekly-board-overview.png",

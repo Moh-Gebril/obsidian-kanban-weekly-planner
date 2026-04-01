@@ -1,12 +1,38 @@
 <%*
 // ─── WEEK CONFIGURATION ─────────────────────────────────────────────────────
 const WEEK_START_DAY = 6; // 0 = Sunday, 6 = Saturday
-const WEEKDAY_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const LOCALES = {
+  en: {
+    cssclasses: "kanban-en",
+    weekdayPrefix: "▸",
+    lanes: {
+      todo: "To Do",
+      blocked: "Blocked",
+      done: "Done",
+    },
+    weekdays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  },
+  ar: {
+    cssclasses: "kanban-ar kanban-rtl",
+    weekdayPrefix: "◂",
+    lanes: {
+      todo: "قائمة المهام",
+      blocked: "متوقف",
+      done: "مكتمل",
+    },
+    weekdays: ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+    months: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+  },
+};
 
 const pad = (value) => String(value).padStart(2, "0");
 const toIsoDate = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-const toDayLabel = (date) => `${pad(date.getDate())} ${MONTH_SHORT[date.getMonth()]}`;
+const locale = (await tp.system.suggester(["English", "العربية"], ["en", "ar"], false, "Choose board language / اختر لغة اللوحة")) ?? "en";
+const t = LOCALES[locale] ?? LOCALES.en;
+const fileExists = (baseName) => tp.app.vault.getAbstractFileByPath(`${baseName}.md`) !== null;
+const toDayLabel = (date, monthNames) => `${pad(date.getDate())} ${monthNames[date.getMonth()]}`;
+const toDayHeading = (date, config) => `## ${config.weekdayPrefix} ${config.weekdays[date.getDay()]} · ${toDayLabel(date, config.months)}`;
 const getIsoWeek = (date) => {
   const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   const dayNumber = utcDate.getUTCDay() || 7;
@@ -36,33 +62,40 @@ const weekDays = Array.from({ length: 7 }, (_, offset) => {
 const weekEnd = weekDays[6];
 const { isoYear, weekNumber } = getIsoWeek(weekStart);
 const weekLabel = `${isoYear}-W${pad(weekNumber)}`;
+const targetFileName = locale === "ar" ? `${weekLabel}-ar` : weekLabel;
 
 // ─── AUTO-RENAME FILE ON CREATION ──────────────────────────────────────────
-await tp.file.rename(`Weekly-Kanban-${weekLabel}`);
+if (fileExists(targetFileName)) {
+  throw new Error(`A ${locale === "ar" ? "Arabic" : "English"} board for ${weekLabel} already exists as ${targetFileName}.md`);
+}
+
+await tp.file.rename(targetFileName);
 const boardBody = [
   "---",
   "kanban-plugin: board",
   `week: \"${weekLabel}\"`,
   `date_start: ${toIsoDate(weekStart)}`,
   `date_end: ${toIsoDate(weekEnd)}`,
+  `locale: ${locale}`,
+  `cssclasses: \"${t.cssclasses}\"`,
   "type: weekly-kanban",
   "---",
   "",
-  "## 📋 To Do",
+  `## ${t.lanes.todo}`,
   "",
   "",
   "",
   ...weekDays.flatMap((date) => [
-    `## ▸ ${WEEKDAY_SHORT[date.getDay()]} · ${toDayLabel(date)}`,
+    toDayHeading(date, t),
     "",
     "",
     "",
   ]),
-  "## 🧐 Blocked",
+  `## ${t.lanes.blocked}`,
   "",
   "",
   "",
-  "## ✅ Done",
+  `## ${t.lanes.done}`,
   "",
   "",
   "",

@@ -1,13 +1,14 @@
 /* ════════════════════════════════════════════════════════════
-   Professional Kanban — Obsidian Kanban Sprint
+   Professional Kanban — Obsidian Kanban Weekly Planner
    ════════════════════════════════════════════════════════════ */
 
 /* ── Google Font ──────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
 
 /* ── Design Tokens ──────────────────────────────────────────── */
 :root {
-  --kp-font:           'Nunito', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+  --kp-font:           'Nunito', 'Noto Sans Arabic', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+  --kp-font-ar:        'Noto Sans Arabic', 'Nunito', 'SF Pro Text', -apple-system, system-ui, sans-serif;
   --kp-radius-lane:    14px;
   --kp-radius-card:    9px;
   --kp-shadow-lane:    0 2px 10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -30,6 +31,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+.kanban-ar .kanban-plugin__board,
+.kanban-ar .kanban-plugin__board * {
+  font-family: var(--kp-font-ar) !important;
 }
 
 /* ── Board ──────────────────────────────────────────────────── */
@@ -195,3 +201,72 @@
 .kanban-plugin__lane-items::-webkit-scrollbar-track  { background: transparent; }
 .kanban-plugin__lane-items::-webkit-scrollbar-thumb  { background: var(--background-modifier-border); border-radius: 4px; }
 .kanban-plugin__lane-items::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+/* ── Arabic / RTL board support ───────────────────────────── */
+.kanban-ar .kanban-plugin__board {
+  direction: rtl;
+  flex-direction: row-reverse;
+}
+
+.kanban-ar .kanban-plugin__lane,
+.kanban-ar .kanban-plugin__lane-header-wrapper,
+.kanban-ar .kanban-plugin__lane-items,
+.kanban-ar .kanban-plugin__lane-title,
+.kanban-ar .kanban-plugin__item-title,
+.kanban-ar .kanban-plugin__lane-items h3,
+.kanban-ar .kanban-plugin__lane-items .kanban-plugin__lane-items-group-title {
+  direction: rtl;
+  text-align: right;
+}
+
+.kanban-ar .kanban-plugin__lane-title,
+.kanban-ar .kanban-plugin__item-title,
+.kanban-ar .kanban-plugin__lane-items h3,
+.kanban-ar .kanban-plugin__lane-items .kanban-plugin__lane-items-group-title {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kanban-ar .kanban-plugin__lane-header-wrapper .kanban-plugin__lane-title-count {
+  direction: ltr;
+}
+
+.kanban-ar .kanban-plugin__item {
+  border-left: 1px solid var(--background-modifier-border);
+  border-right: 3px solid var(--background-modifier-border);
+}
+
+.kanban-ar .kanban-plugin__item:has(.tag[href="#dev"]) {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: rgb(var(--kp-dev));
+}
+
+.kanban-ar .kanban-plugin__item:has(.tag[href="#security"]) {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: rgb(var(--kp-security));
+}
+
+.kanban-ar .kanban-plugin__item:has(.tag[href="#research"]) {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: rgb(var(--kp-research));
+}
+
+.kanban-ar .kanban-plugin__item:has(.tag[href="#learning"]) {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: rgb(var(--kp-learning));
+}
+
+.kanban-ar .kanban-plugin__item:has(.tag[href="#devops"]) {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: rgb(var(--kp-devops));
+}
+
+.kanban-ar .kanban-plugin__item:has(.tag[href="#admin"]) {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: rgb(var(--kp-admin));
+}
+
+.kanban-ar .kanban-plugin__item .tag {
+  margin-left: 2px;
+  margin-right: 0;
+}
