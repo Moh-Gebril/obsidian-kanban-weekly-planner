@@ -1,4 +1,4 @@
-# Obsidian Kanban Sprint
+# Obsidian Kanban Weekly Planner
 
 A lightweight weekly planner built entirely in [Obsidian](https://obsidian.md). Organize any area of your life — work, learning, personal projects, health, or anything else — using two Kanban boards: a permanent **Backlog** and a **Weekly Board** created fresh each week. The included example is tailored for software engineering and cybersecurity, but the framework adapts to any domain.
 
@@ -15,6 +15,7 @@ A lightweight weekly planner built entirely in [Obsidian](https://obsidian.md). 
 - Color-coded domain tags for instant visual context
 - Professional styling via a custom CSS snippet (Nunito font, card accents, shadows)
 - One-click weekly board generation with Templater
+- Week-aware template logic that always anchors the board to the current Saturday-Friday window
 
 ---
 
@@ -29,6 +30,8 @@ A lightweight weekly planner built entirely in [Obsidian](https://obsidian.md). 
 | [Kanban](https://github.com/mgmeyers/obsidian-kanban) | Renders drag-and-drop boards |
 
 3. Enable both plugins.
+
+The committed vault also includes `Calendar` and `Dataview` in `.obsidian` for convenience, but they are optional and not required for the planner workflow.
 
 ---
 
@@ -46,7 +49,7 @@ A lightweight weekly planner built entirely in [Obsidian](https://obsidian.md). 
 
 5. **Create your first weekly board:**
    Press `Ctrl+P` → `Templater: Create new note from template` → select `Weekly-Kanban-Template`.
-   The file is auto-named `Weekly-Kanban-YYYY-Www.md` with all dates filled in.
+   The file is auto-named `Weekly-Kanban-YYYY-Www.md` from the board's actual week start, and all dates are filled in even if you create it midweek.
 
 6. **Pull tasks into the week:**
    Open `Backlog.md` and the weekly board **side by side** (drag the tab to split the view), then drag tasks into the **📋 To Do** lane.
@@ -56,7 +59,7 @@ A lightweight weekly planner built entirely in [Obsidian](https://obsidian.md). 
 ## File Structure
 
 ```
-obsidian-kanban-sprint/
+obsidian-kanban-weekly-planner/
 ├── .obsidian/snippets/
 │   └── kanban-professional.css     # Visual styling — Nunito font, card accents, shadows
 ├── _templates/
@@ -147,7 +150,7 @@ Edit `.obsidian/snippets/kanban-professional.css` — update the `@import` URL a
 3. Add a `tagKey` entry in the `%% kanban:settings %%` JSON block of both `Backlog.md` and the weekly template.
 
 ### Change the week start day
-Edit the `"date-picker-week-start"` value in the kanban settings blocks (`6` = Saturday, `1` = Monday).
+Update `WEEK_START_DAY` at the top of `_templates/Weekly-Kanban-Template.md`, then change the `"date-picker-week-start"` value in the kanban settings blocks (`6` = Saturday, `1` = Monday).
 
 ---
 
