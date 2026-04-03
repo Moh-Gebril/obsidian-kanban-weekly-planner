@@ -1,0 +1,10 @@
+{
+  "id": "project-lane-auto-tag",
+  "name": "Project Lane Auto Tag",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Automatically derives project tags and styling from backlog lane titles.",
+  "author": "Mohamed Gebril",
+  "authorUrl": "https://github.com/Moh-Gebril",
+  "isDesktopOnly": false
+}

@@ -105,6 +105,6 @@ tR += boardBody;
 -%>
 %% kanban:settings
 ```
-{"kanban-plugin":"board","list-collapse":[false,false,false,false,false,false,false,false,false,false,true],"date-display-format":"DD MMM","date-picker-week-start":6,"show-checkboxes":true,"lane-width":290,"tag-colors":[{"tagKey":"#project/a","color":"rgba(37, 99, 235, 1)","backgroundColor":"rgba(37, 99, 235, 0.12)"},{"tagKey":"#project/b","color":"rgba(5, 150, 105, 1)","backgroundColor":"rgba(5, 150, 105, 0.12)"},{"tagKey":"#project/c","color":"rgba(217, 119, 6, 1)","backgroundColor":"rgba(217, 119, 6, 0.12)"}]}
+{"kanban-plugin":"board","list-collapse":[false,false,false,false,false,false,false,false,false,false,true],"date-display-format":"DD MMM","date-picker-week-start":6,"show-checkboxes":true,"lane-width":290,"tag-colors":[]}
 ```
 %%

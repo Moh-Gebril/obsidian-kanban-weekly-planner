@@ -1,268 +1,227 @@
 # Obsidian Kanban Weekly Planner
 
-A lightweight planning vault for [Obsidian](https://obsidian.md) built around two core artifacts:
+An Obsidian planning vault built around two working boards:
 
-- a permanent project backlog
+- a persistent backlog for project capture and prioritization
 - a weekly Kanban board generated from a template
 
-The repository is designed for users who want a simple planning system inside Obsidian without depending on an external task manager. It supports both English and Arabic weekly boards, including right-to-left rendering for Arabic.
+The vault supports English and Arabic weekly boards, automatic project tagging from backlog lane titles, and consistent project styling across backlog and weekly execution boards.
 
 ![Backlog Board](assets/screenshots/backlog-overview.png)
 
-## Overview
+## What This Project Does
 
-The workflow is intentionally simple:
+This repository is not an Obsidian plugin package on its own. It is a ready-to-use Obsidian vault that combines:
 
-1. Capture and organize work in `Backlog.md`
-2. Create a weekly board from the template
-3. Choose the board language when the template runs
-4. Drag selected tasks into the current week
-5. Move tasks through the board during the week
+- `Backlog.md` as the main planning board
+- `_templates/Weekly-Kanban-Template.md` for weekly board generation
+- a local vault plugin that derives project tags from backlog lanes
+- a shared CSS snippet for Kanban layout, typography, and RTL support
+- reference example boards in English and Arabic
 
-The vault is optimized for planning clarity rather than automation complexity. Metadata stays machine-friendly, while visible labels are localized for the chosen board language.
+The intended workflow is:
 
-## Features
+1. Capture work in `Backlog.md`
+2. Rename project lanes to real project names
+3. Let the local plugin generate and maintain project tags
+4. Create the weekly board from the template
+5. Move tagged work into the current week
+6. Track execution day by day
 
-- Permanent backlog board for long-lived task capture and project planning
+## Core Features
+
+### Backlog Planning
+
+- Permanent backlog board for project-level planning
+- Minimal starter structure for first-time setup:
+  - `Inbox`
+  - `Project A`
+  - `Project B`
+  - `Project C`
+- Separate English and Arabic example backlog boards for reference
+
+### Weekly Board Generation
+
 - Weekly board template powered by Templater
-- Language prompt on board creation: English or Arabic
-- Exact filename rules:
-  - English weekly boards: `YYYY-Www.md`
-  - Arabic weekly boards: `YYYY-Www-ar.md`
-- Collision protection: if a board for the same week and language already exists, template creation stops with an explicit error
-- ISO-style metadata in frontmatter for consistency:
+- Board language prompt on creation: English or Arabic
+- Strict filename rules:
+  - English: `YYYY-Www.md`
+  - Arabic: `YYYY-Www-ar.md`
+- Explicit collision protection if the target weekly board already exists
+- Stable machine-readable metadata:
   - `week`
   - `date_start`
   - `date_end`
   - `locale`
   - `cssclasses`
-- Arabic support as a first-class feature:
-  - Arabic lane labels
-  - Arabic weekday and month names
-  - right-to-left board rendering
-  - Arabic-capable font stack
-- Starter backlog designed for first-time setup:
-  - `Inbox`
-  - `Project 1`
-  - `Project 2`
-  - `Project 3`
-- Separate English and Arabic example boards for onboarding
-- Example project-specific tags and colors for easy customization
-- Priority markers in task text:
-  - `🔴` High
-  - `🟡` Medium
-  - `🟢` Low
-- Custom CSS snippet for board styling
+- Saturday-to-Friday weekly range
 
-## Arabic Support
+### Project Automation
 
-Arabic support is built into the same planner system rather than maintained as a separate template.
+The local plugin `project-lane-auto-tag` is the main new feature in the current repository.
 
-When the weekly template runs and Arabic is selected:
+It turns backlog lane titles into project identities:
 
-- the note is created with an `-ar` filename suffix
-- the board uses Arabic day and month names
-- lane labels are localized
-- the note receives RTL-specific CSS classes
-- the board layout renders right-to-left through the CSS snippet
+- `## Wazuh System` becomes `#wazuh-system`
+- `## Project D` becomes `#project-d`
+- Arabic lane titles generate Arabic-script tags
 
-This keeps the underlying structure consistent while making the Arabic experience usable as a native planning mode, not just translated text inside an English layout.
+It also keeps project tags synchronized:
 
-## Prerequisites
+- cards added inside a project lane receive the lane-derived project tag
+- moving a card between project lanes replaces the managed project tag
+- moving a card to `Inbox` or `الوارد` removes the managed project tag
+- non-project tags remain untouched
 
-Install [Obsidian](https://obsidian.md) v1.5 or later, then install and enable these community plugins:
+Weekly boards do not generate project tags. They render the project styling for any project tag already present on the card.
 
-| Plugin | Purpose |
-|--------|---------|
-| [Templater](https://github.com/SilentVoid13/Templater) | Generates, renames, and localizes weekly boards |
-| [Kanban](https://github.com/mgmeyers/obsidian-kanban) | Renders Markdown-backed Kanban boards |
+### Project Styling
 
-The committed vault also includes `Calendar` and `Dataview` as optional extras inside `.obsidian`, but the planner itself depends only on Templater and Kanban.
+Project styling is global and tag-driven rather than repeated manually in each board:
 
-## Quick Start
+- colored project tag pill
+- project-colored card accent border
+- subtle tinted card background
+- consistent styling in both backlog and weekly boards
 
-1. Clone or download the repository.
-2. Open the folder as an Obsidian vault.
-3. Set `Settings -> Templater -> Template folder location` to `_templates`.
-4. Enable the `kanban-professional` CSS snippet in `Settings -> Appearance -> CSS snippets`.
-5. Open `Backlog.md`.
-6. Rename `Project 1`, `Project 2`, and `Project 3` to match your real projects.
-7. Add tasks under the appropriate project lane. Use `Inbox` for unsorted tasks.
-8. Optionally review `Backlog-Example.md`, `Backlog-Example-ar.md`, `2026-W01.md`, and `2026-W01-ar.md` for reference.
-9. Run `Templater: Create new note from template`.
-10. Select `Weekly-Kanban-Template`.
-11. Choose the board language.
-12. Drag tasks from `Backlog.md` into the new weekly board.
+This produces a cleaner workflow than editing project colors board by board.
 
-## Weekly Workflow
+### Arabic Support
 
-### 1. Plan the week
+Arabic support is a first-class part of the vault:
 
-- Create the weekly board from the template
-- Choose English or Arabic
-- Move committed work from the backlog into the weekly board
+- Arabic weekly board labels
+- Arabic weekday names
+- Arabic month names
+- RTL board layout
+- Arabic CSS classes for weekly boards
+- Arabic backlog lanes can generate Arabic-script project tags
 
-### 2. Schedule daily work
+Arabic weekly boards currently use:
 
-- Move tasks from `To Do` or the Arabic equivalent into the current day lane
-- Keep the board updated during the week rather than treating it as a static plan
+- `قائمة المهام`
+- `متوقف`
+- `مكتمل`
 
-### 3. Close the week
+### Priority Markers
 
-- Move completed work to `Done` or `مكتمل`
-- Move blocked work to `Blocked` or `متوقف`
-- Carry unfinished work into the next board if still relevant
+Task priority is intentionally lightweight and visible in plain Markdown:
 
-![Weekly Board](assets/screenshots/weekly-board-overview.png)
+- `🔴` High
+- `🟡` Medium
+- `🟢` Low
 
-## Backlog Design
-
-`Backlog.md` is intentionally minimal.
-
-Instead of shipping a fully populated demo backlog, the file starts with:
-
-- `Inbox`
-- `Project 1`
-- `Project 2`
-- `Project 3`
-
-This makes first-time setup faster for real use. Users can rename project lanes in the language they prefer and start planning immediately without cleaning out sample content.
-
-## Example Files
-
-The repository includes four static example boards for reference:
-
-- `Backlog-Example.md`: English backlog example with project-based tags and colors
-- `Backlog-Example-ar.md`: Arabic backlog example with the same tag model
-- `2026-W01.md`: English weekly example for ISO week `2026-W01`
-- `2026-W01-ar.md`: Arabic weekly example for the same week
-
-These files are not used by the template. They exist to show a complete working pattern for:
-
-- project-based backlog organization
-- project tag colors
-- task priority markers
-- weekly scheduling in English and Arabic
-
-## Project Tag Colors
-
-The example boards use one tag per project:
-
-- `#project/a`
-- `#project/b`
-- `#project/c`
-
-This is the easiest way to give each project a stable visual identity across backlog and weekly boards.
-
-To replace the example tags with your own:
-
-1. Rename the project lane, for example `Project A` to `Website Redesign`.
-2. Replace the matching task tag everywhere in that board, for example `#project/a` to `#project/website-redesign`.
-3. Update the matching `tag-colors` entry in the Kanban settings block at the bottom of the board.
-4. If you want the same colors in generated weekly boards, copy the same `tag-colors` entries into the settings block inside `_templates/Weekly-Kanban-Template.md`.
-
-Example:
-
-```json
-[
-  {
-    "tagKey": "#project/website-redesign",
-    "color": "rgba(37, 99, 235, 1)",
-    "backgroundColor": "rgba(37, 99, 235, 0.12)"
-  },
-  {
-    "tagKey": "#project/mobile-app",
-    "color": "rgba(5, 150, 105, 1)",
-    "backgroundColor": "rgba(5, 150, 105, 0.12)"
-  }
-]
-```
-
-## Priority Markers
-
-The example boards use three priority markers inside task text:
-
-- `🔴` High priority
-- `🟡` Medium priority
-- `🟢` Low priority
-
-These markers are simple text conventions, so you can keep them, rename them in your workflow documentation, or remove them entirely if you prefer a cleaner board.
-
-## File Structure
+## Repository Contents
 
 ```text
 obsidian-kanban-weekly-planner/
 ├── .obsidian/
-│   ├── snippets/kanban-professional.css
-│   └── plugins/...
+│   ├── plugins/
+│   │   └── project-lane-auto-tag/
+│   └── snippets/
+│       └── kanban-professional.css
 ├── _templates/
 │   └── Weekly-Kanban-Template.md
 ├── Backlog.md
 ├── Backlog-Example.md
 ├── Backlog-Example-ar.md
-├── YYYY-Www.md
-├── YYYY-Www-ar.md
 ├── 2026-W01.md
 ├── 2026-W01-ar.md
 ├── assets/
 │   └── screenshots/
-├── LICENSE
 └── README.md
 ```
 
-## Template Behavior
+## Setup
 
-The weekly template does all of the following:
+1. Open the repository as an Obsidian vault.
+2. Enable the required community plugins:
+   - `Templater`
+   - `Kanban`
+   - `project-lane-auto-tag` (included locally in this repo)
+3. Set `Settings -> Templater -> Template folder location` to `_templates`.
+4. Enable the CSS snippet `kanban-professional` in `Settings -> Appearance -> CSS snippets`.
+5. Open `Backlog.md`.
 
-- calculates the active week from the configured start day
-- anchors the week to the Saturday-Friday window used by this vault
-- prompts for board language
-- applies the correct filename
-- writes localized visible labels
-- preserves stable frontmatter fields
-- fails fast if the target filename already exists
+The committed vault also includes `Calendar` and `Dataview` in `.obsidian`, but they are optional for the planner workflow.
 
-This avoids accidental overwrites and keeps board creation deterministic.
+## How To Use It
 
-## Styling
+### 1. Set up your backlog
 
-The custom CSS snippet in `.obsidian/snippets/kanban-professional.css` provides:
+- Open `Backlog.md`
+- Rename `Project A`, `Project B`, and `Project C` to your actual project names
+- Add more project lanes whenever needed
+- Add cards under the correct project lane
 
-- board spacing and lane styling
-- card accent borders by tag
-- Arabic-capable font support
-- RTL layout for Arabic boards
-- mirrored card border behavior for RTL notes
-- consistent visual treatment across backlog and weekly boards
+The plugin will derive and maintain the project tag for each card automatically.
+
+### 2. Create the weekly board
+
+1. Run `Templater: Create new note from template`
+2. Select `Weekly-Kanban-Template`
+3. Choose English or Arabic
+4. Open the generated weekly board
+
+### 3. Run the week
+
+- Move tagged work from the backlog into `To Do` or `قائمة المهام`
+- Schedule work into day lanes
+- Move blocked work to `Blocked` or `متوقف`
+- Move completed work to `Done` or `مكتمل`
+
+![Weekly Board](assets/screenshots/weekly-board-overview.png)
+
+## Example Files
+
+The repository includes four reference boards:
+
+- `Backlog-Example.md`
+- `Backlog-Example-ar.md`
+- `2026-W01.md`
+- `2026-W01-ar.md`
+
+They are not required for the workflow. They exist to demonstrate:
+
+- project lane naming
+- automatic project tag generation
+- English and Arabic board usage
+- priority markers
+- project styling on backlog and weekly boards
+
+## Plugin Commands
+
+The local project plugin adds:
+
+- `Sync project tags in current board`
+- `Rebuild project tag registry`
+
+Use them if you want to force a manual resync after larger edits.
 
 ## Customization
 
 Common customization points:
 
-- Change the week start day:
+- Change the week start logic:
   - update `WEEK_START_DAY` in `_templates/Weekly-Kanban-Template.md`
-  - update `date-picker-week-start` in the Kanban settings blocks
-- Change visible English or Arabic board labels:
-  - edit the locale definitions in `_templates/Weekly-Kanban-Template.md`
+- Change weekly board labels:
+  - edit the locale map in `_templates/Weekly-Kanban-Template.md`
 - Change Arabic wording:
-  - update the Arabic lane labels, weekday names, or month names in the template locale map
-- Change example project colors:
-  - update the `tag-colors` JSON blocks in the example boards
-  - copy the same entries into the weekly template if you want generated boards to match
-- Change styling:
+  - update the Arabic label strings, weekday names, or month names in the same template
+- Change base Kanban styling:
   - edit `.obsidian/snippets/kanban-professional.css`
+- Change reserved non-project lanes:
+  - edit the `project-lane-auto-tag` plugin settings
+- Change project colors:
+  - update the palette in `.obsidian/plugins/project-lane-auto-tag/main.js`
 
 ## Notes
 
-- `Backlog.md` remains the clean starter board for day-to-day use.
-- The example files are reference boards intended to be copied from, not required parts of the weekly workflow.
-- Weekly filenames are intentionally strict and are not auto-incremented.
-- Screenshot assets are illustrative and can be replaced independently from the planner logic.
+- `Backlog.md` is the main starter board for real use.
+- Weekly boards consume project tags; they do not generate them.
+- Project styling is generated dynamically by the local plugin.
+- Local runtime files such as workspace state and plugin data should stay out of version control.
 
 ## License
 
 [MIT](LICENSE)
-
-## Author
-
-Mohamed Gebril
