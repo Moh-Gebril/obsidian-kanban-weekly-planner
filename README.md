@@ -158,7 +158,7 @@ The plugin will derive and maintain the project tag for each card automatically.
 
 ### 2. Create the weekly board
 
-1. Run `Templater: Create new note from template`
+1. Run `Templater: Create new note from template` `Alt + N`
 2. Select `Weekly-Kanban-Template`
 3. Choose English or Arabic
 4. Open the generated weekly board
